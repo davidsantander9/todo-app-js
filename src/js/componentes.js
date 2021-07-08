@@ -27,7 +27,6 @@ export const createTodoHtml = ( todo ) => {
 // Events
 
 txtInput.addEventListener('keyup', (e)=>{
-    console.log(e.keyCode)
 
     if(e.keyCode === 13 && txtInput.value.length > 0 ){
         const todo = new Todo(txtInput.value);
@@ -36,3 +35,15 @@ txtInput.addEventListener('keyup', (e)=>{
         txtInput.value = '';
     }
 }); 
+
+divTodoList.addEventListener('click', (e) => {
+    const elementName = e.target.localName;
+    const todoeElement = e.target.parentElement.parentElement;
+    const todoId = todoeElement.getAttribute('data-id');
+
+    if( elementName.includes('input')) {
+        todoList.markAsComplete( todoId);
+        todoeElement.classList.toggle('completed');
+    }
+
+});
