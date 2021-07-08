@@ -4,6 +4,7 @@ import '../css/componentes.css';
 
 const divTodoList = document.querySelector('.todo-list');
 const txtInput = document.querySelector('.new-todo');
+const btnDelete = document.querySelector('.clear-completed');
 
 export const createTodoHtml = ( todo ) => {
     const htmlTodo = `
@@ -41,9 +42,22 @@ divTodoList.addEventListener('click', (e) => {
     const todoeElement = e.target.parentElement.parentElement;
     const todoId = todoeElement.getAttribute('data-id');
 
-    if( elementName.includes('input')) {
+    if( elementName.includes('input') ) {
         todoList.markAsComplete( todoId);
         todoeElement.classList.toggle('completed');
+    }else if( elementName.includes('button') ){
+        todoList.deleteTodo(todoId);
+        divTodoList.removeChild(todoeElement);
     }
 
+});
+
+btnDelete.addEventListener('click', () => {
+    todoList.deleteCompletedTasks();
+    for( let i = divTodoList.children.length-1; i >= 0; i--){
+        const element = divTodoList.children[i];
+        if( element.classList.contains('completed')){
+            divTodoList.removeChild(element);
+        }
+    }
 });
